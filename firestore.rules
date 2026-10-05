@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Admin user ID requested by the user
+    function isAdmin() {
+      return isAuthenticated() && request.auth.uid == 'V2KThwWwUbcXeBJDLkYn3lluWeM2';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User collection: Admin can read all users, users can only read/write their own
+    match /users/{userId} {
+      allow read: if isAdmin() || isOwner(userId);
+      allow create, update: if isOwner(userId) || isAdmin();
+      allow delete: if isAdmin();
+
+      // User's uploaded files subcollection
+      match /files/{fileId} {
+        allow read: if isAdmin() || isOwner(userId);
+        allow create, update: if isOwner(userId) || isAdmin();
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // Optional top-level files collection
+    match /files/{fileId} {
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
+      allow create, update: if isAuthenticated() && (request.resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
+    }
+  }
+}

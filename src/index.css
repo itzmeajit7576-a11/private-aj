@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Cyber glowing borders and box-shadows */
+  .glow-cyan {
+    box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
+  }
+  .glow-red {
+    box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.4);
+  }
+  .glow-amber {
+    box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.35);
+  }
+  .glow-emerald {
+    box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
+  }
+
+  /* Scanline effect */
+  .bg-cyber-grid {
+    background-size: 30px 30px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  .bg-radar-sweep {
+    background: conic-gradient(from 0deg at 50% 50%, rgba(6, 182, 212, 0.3) 0deg, rgba(6, 182, 212, 0) 70deg);
+  }
+}
+
+/* Radar rotation keyframes */
+@keyframes radar-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar {
+  animation: radar-spin 4s linear infinite;
+}
+
+/* Scanning line animation */
+@keyframes scan-vertical {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.2;
+  }
+}
+
+.animate-scan-line {
+  animation: scan-vertical 2.2s ease-in-out infinite alternate;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090e1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
+}
+
+/* Print Styles for PDF / Report Generation */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-card {
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+}

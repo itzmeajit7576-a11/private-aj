@@ -1,0 +1,44 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Registered user profile in the threat detection system",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "filesCount": { "type": "number" }
+      },
+      "required": ["id", "email"]
+    },
+    "UploadedEmailFile": {
+      "title": "UploadedEmailFile",
+      "description": "Email file uploaded to Firebase Storage and indexed in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "fileSize": { "type": "number" },
+        "downloadUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "storageBucket": { "type": "string" },
+        "uploadedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "fileName", "downloadUrl", "storagePath"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile documents"
+    },
+    "/users/{userId}/files/{fileId}": {
+      "schema": "UploadedEmailFile",
+      "description": "Files uploaded by user"
+    }
+  }
+}

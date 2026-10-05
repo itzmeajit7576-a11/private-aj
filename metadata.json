@@ -1,0 +1,6 @@
+{
+  "name": "AI Email Threat Detection",
+  "description": "AI-powered cybersecurity platform that analyzes emails, URLs, headers, and sender patterns to detect phishing, BEC, scams, and cyber threats with risk scoring and threat intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
